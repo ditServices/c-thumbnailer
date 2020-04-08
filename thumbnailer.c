@@ -8,6 +8,8 @@
 #include <zconf.h>
 #include <string.h>
 
+#define RESIZE_PERCENTAGE 10
+
 
 void create_dest_folder(char *dest) {
     mkdir(dest, 0755);
@@ -60,7 +62,7 @@ int process_thumbnails(Thumbnail_dir *working_dir) {
             working_dir->thumbnails = NewImageList();
 
             while ( (working_dir->image = RemoveFirstImageFromList(&working_dir->images)) != (Image *) NULL ) {
-                working_dir->resize_image = ResizeImage(working_dir->image, 212, 160, Lanczos2Filter, 1.0, working_dir->exception);
+                working_dir->resize_image = ResizeImage(working_dir->image, working_dir->image->columns / 100 * RESIZE_PERCENTAGE, working_dir->image->rows / 100 * RESIZE_PERCENTAGE, Lanczos2Filter, 1.0, working_dir->exception);
                 if (working_dir->resize_image == (Image *) NULL) {
                     MagickError(working_dir->exception->severity, working_dir->exception->reason, working_dir->exception->description);
                 }
