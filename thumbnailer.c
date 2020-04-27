@@ -10,7 +10,6 @@
 
 #define RESIZE_PERCENTAGE 10
 
-
 void create_dest_folder(char *dest) {
     mkdir(dest, 0755);
 };
@@ -92,4 +91,5 @@ int process_thumbnails(Thumbnail_dir *working_dir) {
 void tidy_up(Thumbnail_dir *working_dir) {
     closedir(working_dir->dp);
     MagickCoreTerminus();
+    free(working_dir);
 }
